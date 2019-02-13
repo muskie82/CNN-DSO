@@ -3,7 +3,7 @@
 ### 1. Overview
 <p align="center"> <img src="https://github.com/muskie82/CNN-DSO/blob/master/gif/demo.gif" width="500" height="320"> </p>
 
-This code provides a combination of [DSO](https://arxiv.org/pdf/1607.02565.pdf) and [Monodepth](https://arxiv.org/pdf/1609.03677.pdf).
+This code provides a combination of [DSO](https://vision.in.tum.de/research/vslam/dso) and [Monodepth](http://visual.cs.ucl.ac.uk/pubs/monoDepth/).
 For every keyframe, depth values are initialized with the prediction from Monodepth.
 
 Absolute keyframe trajectory RMSE (in meter)
@@ -29,9 +29,9 @@ on KITTI dataset (DSO and ORB-SLAM numbers are from [CNN-SVO paper](https://arxi
 - Setup dependencies of DSO (https://github.com/JakobEngel/dso)
 
 ##### Monodepth
-- Build TensorFlow C++ API (https://github.com/yan99033/monodepth-cpp/tree/master/Tensorflow_build_instructions). 
+- Build TensorFlow C++ API (https://github.com/yan99033/monodepth-cpp/tree/master/Tensorflow_build_instructions). **This is the hardest part!** 
 - Build monodepth-cpp (https://github.com/yan99033/monodepth-cpp). 
-- Prepare Monodepth pre-rained model. You can download the model trained on cityscapes and fine-tuned on kitti [here](https://github.com/yan99033/monodepth-cpp/tree/master/model). 
+- Prepare Monodepth pre-trained model. You can freaze .ckpt or download the model trained on cityscapes and fine-tuned on kitti [here](https://github.com/yan99033/monodepth-cpp/tree/master/model). 
 
 
 #### 2.3 Build
@@ -40,7 +40,7 @@ on KITTI dataset (DSO and ORB-SLAM numbers are from [CNN-SVO paper](https://arxi
 
 		git clone https://github.com/muskie82/CNN-DSO.git
 
-- Modify paths to include directories and libraries of TensorFlow and monodepth-cpp in `CMakeLists.txt`.
+- Modify paths to include directories and libraries of TensorFlow and monodepth-cpp in `CMakeLists.txt` (4 lines of `/abosolute/path/to/XXXXX`).
 
 - Build
 
@@ -52,14 +52,14 @@ on KITTI dataset (DSO and ORB-SLAM numbers are from [CNN-SVO paper](https://arxi
 	
 
 ### 3 Usage
-You should specify the path to pre-trained model by `cnn`.
+In addition to original DSO command line, you should specify the path to pre-trained model by `cnn`.
 
 		bin/dso_dataset \
-			files=XXXXX/sequence_XX/images.zip \
+			files=XXXXX/sequence_XX/image_0 \
 			calib=XXXXX/sequence_XX/camera.txt \
 			cnn=XXXXX/model_city2kitti.pb \
 			preset=0 \
-			mode=0
+			mode=1
 
 
 ### 4 Reference
